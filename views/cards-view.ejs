@@ -11,13 +11,12 @@
 
 
 <body>
-    <!-- <header><h1 tabindex="0" id="title">Generate your quote</h1></header> -->
-
-    <% for (var i =1; i <=52;  i++ ) { %>
-      
-      
-
+    <!-- <header><h1 tabindex="0" id="title">Generate your quote</h1></header> -->  
+<div class="main-box">
     <section class="cards">
+
+      <% for (var i =1; i <= 5;  i++ ) { %>
+
 
       <div class="cards__single">
         <div class="cards__front">
@@ -34,24 +33,30 @@
         </div>
       </div>
 
-    </section>
 
-    <% } %>
+      <% } %>
+
+    </section>
+    <button class="new-card-btn">New Card</button>
+  </div>
+   
     
     <script>
-      let quote = document.querySelector(".cards__quote");
+      let quotes = document.querySelectorAll(".cards__quote");
       const cards = document.querySelectorAll(".cards__single");
+      const singleCard = document.querySelector(".cards__single");
+      const btns = document.querySelector('.new-card-btn')
     
+  
+    
+      const changePosition = () => {
+        cards.forEach((card) => card.className = "cards__single move-card");
+      };
+  
       function flipCard() {
         this.classList.toggle("flip");
       };
 
-      // card.addEventListener("click", flipCard);
-    
-      // const changePosition = () => {
-      //   card.className = "cards__single class-to-left";
-      // };
-    
       fetch("https://type.fit/api/quotes")
         .then(function (response) {
           return response.json();
@@ -61,14 +66,21 @@
           cards.forEach((card) => 
           card.addEventListener("click", () => {
             let randomNumber = Math.floor(Math.random() * 501);
-            quote.innerHTML = data[randomNumber].text;
+            quotes.forEach((quote) => quote.innerHTML = data[randomNumber].text);
           }));
         })
     
       cards.forEach((card) => card.addEventListener("click", flipCard));
-      // card.addEventListener("click", flipCard);
-      // card.addEventListener("click", changePosition);
-      // cards.forEach((card) => card.addEventListener("dblclick", changePosition));
+
+      cards.forEach((card) => card.addEventListener("dblclick", () => {
+        card.className = "cards__single move-card";
+      }));
+
+      btns.addEventListener("click", () => {
+        cards.forEach((card) => card.className = "cards__single move-card");
+      });
+
+
     </script>
 
 </body>
