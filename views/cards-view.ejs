@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+
+
+
+<body>
+    <!-- <header><h1 tabindex="0" id="title">Generate your quote</h1></header> -->
+
+    <% for (var i =1; i <=52;  i++ ) { %>
+      
+      
+
+    <section class="cards">
+
+      <div class="cards__single">
+        <div class="cards__front">
+          <img
+            class="cards__image"
+            src="https://images.unsplash.com/photo-1515937531-e2ec21a05cb1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=375&q=80"
+            alt="PHOTO"
+          />
+          
+        </div>
+        <div class="cards__back">
+          <img class="img-back-card" src="https://www.datenightquestions.com/friends-front.18f70fe3.svg" alt="img-back">
+          <h2 class="cards__quote back-text"></h2>
+        </div>
+      </div>
+
+    </section>
+
+    <% } %>
+    
+    <script>
+      let quote = document.querySelector(".cards__quote");
+      const cards = document.querySelectorAll(".cards__single");
+    
+      function flipCard() {
+        this.classList.toggle("flip");
+      };
+
+      // card.addEventListener("click", flipCard);
+    
+      // const changePosition = () => {
+      //   card.className = "cards__single class-to-left";
+      // };
+    
+      fetch("https://type.fit/api/quotes")
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          // console.log(data);
+          cards.forEach((card) => 
+          card.addEventListener("click", () => {
+            let randomNumber = Math.floor(Math.random() * 501);
+            quote.innerHTML = data[randomNumber].text;
+          }));
+        })
+    
+      cards.forEach((card) => card.addEventListener("click", flipCard));
+      // card.addEventListener("click", flipCard);
+      // card.addEventListener("click", changePosition);
+      // cards.forEach((card) => card.addEventListener("dblclick", changePosition));
+    </script>
+
+</body>
+</html>
